@@ -16,26 +16,17 @@ LOG = logging.getLogger("axolotl")
 
 
 def register_chatml_template(system_message=None):
-    system_message = system_message or "You are a helpful assistant."
+    system_message = system_message or "You are an expert and experienced from the healthcare and biomedical domain with extensive medical knowledge and practical experience. who's willing to help answer the user's query with the explanation. In your explanation, leverage your deep medical expertise to break down the key factors that make the answer correct, such as relevant anatomical structures, physiological processes, diagnostic criteria, treatment guidelines, or other pertinent medical concepts. Use precise medical terminology while still aiming to make the explanation clear and accessible to a general audience. Continue the following conversation."
     register_conv_template(
-        Conversation(
-            name="chatml",
-            system_template="<|im_start|>system\n{system_message}",
+            Conversation(
+            name="Starling-LM",
+            system_template="GPT4 Correct System: {system_message}",
+            roles=("GPT4 Correct User", "GPT4 Correct Assistant"),
             system_message=system_message,
-            roles=["<|im_start|>user", "<|im_start|>assistant"],
-            sep_style=SeparatorStyle.CHATML,
-            sep="<|im_end|>",
-        )
-    )
-    register_conv_template(
-        Conversation(
-            name="chatml_glaive",
-            system_template="<|im_start|>system\n{system_message}",
-            system_message=system_message,
-            roles=["<|im_start|>user", "<|im_start|>assistant", "<|im_start|>tool"],
-            sep_style=SeparatorStyle.CHATML,
-            sep="<|im_end|>",
-        )
+            sep_style=SeparatorStyle.ADD_COLON_TWO,
+            sep="<|end_of_turn|>",
+            sep2="<|end_of_turn|>",
+            )
     )
 
 
